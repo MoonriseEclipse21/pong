@@ -11,13 +11,12 @@ int ball_x_speed = -1;
 int ball_y_speed = 1;
 int racket1_x = 1;
 int racket1_y = 12;
-int racket1_y_start = 12;
 int racket2_x = 78;
 int racket2_y = 12;
-int racket2_y_start = 12;
+int racket_y_start = 12;
 int score1 = 0;
 int score2 = 0;
-int win_score = 2;
+int win_score = 21;
 char input;
 int main() {
     pole();
@@ -55,12 +54,14 @@ int logic(){ // логика
     while(score1 < win_score && score2 < win_score){  //while пока счет одной из команд не будет 21
         input = getchar(); // ввод символа
         if (input == '\n'){
-            ball_x += ball_x_speed;
-            ball_y += ball_y_speed;
-        } // enter в input = продвижение шарика по x и y от скорости x и y
+        printf("\33[0d\33[2J");
+        pole();
+        }// enter в input = продвижение шарика по x и y от скорости x и y
+        ball_x += ball_x_speed;
+        ball_y += ball_y_speed;
         if (ball_y == 1 || ball_y == height ){
             ball_y_speed = -ball_y_speed;
-        } // изменение вектора при столкновении с верхней или нижней стенки
+        } // изменение вектора при столкновении с верхней или нижней стенкой
         if (ball_x == 2 && (ball_y == racket1_y-1 || ball_y == racket1_y || ball_y == racket1_y+1)){
             ball_x_speed = -ball_x_speed;
         } // изменение вектора по x при столкновении с левой ракеткой
@@ -76,16 +77,16 @@ int logic(){ // логика
         if  (ball_x == 1){
             ball_x = ball_x_start;
             ball_y = ball_y_start;
-            racket1_y = racket1_y_start;
-            racket2_y = racket2_y_start;
-            score1 = score1 + 1;
+            score2 = score2 + 1;
+            racket1_y = racket_y_start;
+            racket2_y = racket_y_start;
         }
         if  (ball_x == width-2){
             ball_x = ball_x_start;
             ball_y = ball_y_start;
-            racket1_y = racket1_y_start;
-            racket2_y = racket2_y_start;
-            score2 = score2 + 1;
+            score1 = score1 + 1;
+            racket1_y = racket_y_start;
+            racket2_y = racket_y_start;
         }
     switch (input){ 
             case 'a':
@@ -107,14 +108,17 @@ int logic(){ // логика
             if (racket2_y +2 != height){
                 racket2_y++;
             }
-            break;
+            default:
+                break;
     } // смещение ракеток по y 
-    pole();
+
     if (score1 == win_score){
-        printf("\n 1st player won");
+        printf("\33[0d\33[2J");
+        printf("\n ПОБЕДА ИГРОКА СЛЕВА СО СЧЕТОМ %d:%d",score1,score2);
     }
     if (score2 == win_score){
-        printf("\n 2nd player won");
+        printf("\33[0d\33[2J");
+        printf("\n ПОБЕДА ИГРОКА СЛЕВА СО СЧЕТОМ: %d:%d",score2,score1);
     }
 }
 }
