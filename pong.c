@@ -96,23 +96,23 @@ int logic() {  // логика
       racket1_y = racket_y_start;
       racket2_y = racket_y_start;
     }
-    switch (input) {
-      case 'a':
+    switch (input % 32) {
+      case 1:
         if (racket1_y - 2 != 0) {
           racket1_y--;
         }
         break;
-      case 'z':
+      case 26:
         if (racket1_y + 2 != height) {
           racket1_y++;
         }
         break;
-      case 'k':
+      case 11:
         if (racket2_y - 2 != 0) {
           racket2_y--;
         }
         break;
-      case 'm':
+      case 13:
         if (racket2_y + 2 != height) {
           racket2_y++;
         }
